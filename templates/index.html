@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %} Index {% endblock %}
-
 {% block content %}
+
+    {% if user.is_authenticated %}
+        Logged as: {{ user }}
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+        Not logged in
+    {% endif %}
 
 {% endblock %}
