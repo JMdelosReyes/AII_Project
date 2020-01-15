@@ -7,3 +7,7 @@ def index(request):
 
 def about(request):
     return render(request, 'index.html')
+
+
+def populate(request):
+    return render(request, 'index.html')
