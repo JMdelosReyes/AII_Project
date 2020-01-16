@@ -24,7 +24,7 @@ def extract_generations_data():
             added_pokemons = re.search(find, gen.find_all('td')[1].text.strip()).group(0).strip()
             cont = cont + 1
 
-            print(f'ID: {gen_id} - Name: {name} - Region: {region} - Added Pokèmons: {added_pokemons}')
+            # print(f'ID: {gen_id} - Name: {name} - Region: {region} - Added Pokèmons: {added_pokemons}')
 
             try:
                 gens.append(Generation(int(gen_id), name, region, int(added_pokemons)))
@@ -37,8 +37,5 @@ def extract_generations_data():
 
 
 def populate_generations():
-    print("Started generation population")
-
     Generation.objects.bulk_create(extract_generations_data())
-
-    print("Finished generation population")
+    print(f'Generations inserted: {Generation.objects.count()} - Expected: 8')

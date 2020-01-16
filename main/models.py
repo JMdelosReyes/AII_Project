@@ -29,8 +29,10 @@ class Generation(models.Model):
     def __str__(self):
         return f'ID: {self.gen_id} - Name: {self.name} - Region: {self.region}'
 
-# class Type(models.Model):
 
+class Type(models.Model):
+    type_id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20, unique=True)
 
 # class Ability(models.Model):
 

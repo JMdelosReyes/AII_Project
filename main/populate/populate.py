@@ -1,9 +1,11 @@
-from main.models import Generation
+from main.models import Generation, Type
 from main.populate.populate_generations import populate_generations
+from main.populate.populate_types import populate_types
 
 
 def delete_data():
     Generation.objects.all().delete()
+    Type.objects.all().delete()
 
 
 def populate_database():
@@ -11,6 +13,7 @@ def populate_database():
     delete_data()
 
     populate_generations()
+    populate_types()
 
     print("Finished database population")
 
