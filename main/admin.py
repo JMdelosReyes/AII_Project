@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from main.models import Generation, Pokemon
+
+admin.site.register(Generation)
+admin.site.register(Pokemon)
