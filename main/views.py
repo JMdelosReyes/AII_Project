@@ -13,4 +13,4 @@ def about(request):
 
 def populate(request):
     populate_database()
-    return render(request, 'index.html')
+    return render(request, 'notification.html', {'message': 'Populate finished'})
