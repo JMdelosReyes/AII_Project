@@ -47,7 +47,23 @@ class Ability(models.Model):
     def __str__(self):
         return f'ID: {self.ability_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
 
-# class Move(models.Model):
 
+class Move(models.Model):
+    move_id = models.IntegerField(primary_key=True)
+    spanish_name = models.CharField(max_length=50, unique=True)
+    english_name = models.CharField(max_length=50, unique=True)
+    type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
+    category = models.CharField(choices=('Physical', 'Special'))
+    power = models.PositiveIntegerField()
+    accuracy = models.IntegerField(null=True, default=100)
+    secondary_effect = models.CharField(max_length=100)
+    min_power_points = models.PositiveIntegerField()
+    max_power_points = models.PositiveIntegerField()
+    priority = models.IntegerField(validators=[MinValueValidator(0)])
+    contact = models.BooleanField()
+    magic_coat_affected = models.BooleanField()
+    snatch_affected = models.BooleanField()
+    protect_affected = models.BooleanField()
+    kings_rock_affected = models.BooleanField()
 
 # class MoveLearned(models.Model):
