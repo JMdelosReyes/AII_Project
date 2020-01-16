@@ -34,8 +34,18 @@ class Type(models.Model):
     type_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, unique=True)
 
-# class Ability(models.Model):
+    def __str__(self):
+        return f'ID: {self.type_id} - Name: {self.name}'
 
+
+class Ability(models.Model):
+    ability_id = models.IntegerField(primary_key=True)
+    spanish_name = models.CharField(max_length=50, unique=True)
+    english_name = models.CharField(max_length=50, unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return f'ID: {self.ability_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
 
 # class Move(models.Model):
 
