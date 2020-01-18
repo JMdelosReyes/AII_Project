@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 
 from main.models import Type
-from main.populate.populate_utils import open_url, BASE_URL
+from main.populate.populate_utils import open_url, WIKI_URL
 
-TYPES_URL = f'{BASE_URL}/Tipos_elementales'
+TYPES_URL = f'{WIKI_URL}/Tipos_elementales'
 
 
 def extract_types_data():

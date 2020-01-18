@@ -48,13 +48,15 @@ class Ability(models.Model):
         return f'ID: {self.ability_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
 
 
+# No Z moves
 class Move(models.Model):
     move_id = models.IntegerField(primary_key=True)
     spanish_name = models.CharField(max_length=50, unique=True)
     english_name = models.CharField(max_length=50, unique=True)
     type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
-    category = models.CharField(choices=('Physical', 'Special'))
-    power = models.PositiveIntegerField()
+    category = models.CharField(max_length=10,
+                                choices=(('Physical', 'Physical'), ('Special', 'Special'), ('Status', 'Status')))
+    power = models.PositiveIntegerField(null=True)
     accuracy = models.IntegerField(null=True, default=100)
     secondary_effect = models.CharField(max_length=100)
     min_power_points = models.PositiveIntegerField()
@@ -65,5 +67,8 @@ class Move(models.Model):
     snatch_affected = models.BooleanField()
     protect_affected = models.BooleanField()
     kings_rock_affected = models.BooleanField()
+
+    def __str__(self):
+        return f'ID: {self.move_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
 
 # class MoveLearned(models.Model):

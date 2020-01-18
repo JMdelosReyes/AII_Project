@@ -2,9 +2,9 @@ import re
 from bs4 import BeautifulSoup
 
 from main.models import Generation
-from main.populate.populate_utils import open_url, BASE_URL
+from main.populate.populate_utils import open_url, WIKI_URL
 
-GEN_URL = f'{BASE_URL}/Generación_Pokémon'
+GEN_URL = f'{WIKI_URL}/Generación_Pokémon'
 
 
 def extract_generations_data():

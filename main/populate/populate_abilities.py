@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 
 from main.models import Ability
-from main.populate.populate_utils import open_url, BASE_URL
+from main.populate.populate_utils import open_url, WIKI_URL
 
-ABILITIES_URL = f'{BASE_URL}/Lista_de_habilidades'
+ABILITIES_URL = f'{WIKI_URL}/Lista_de_habilidades'
 
 
 def extract_abilities_data():
