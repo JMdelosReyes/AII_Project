@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ title }}</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Generation</th>
+                <th scope="col">Elemental types</th>
+                <th scope="col">Abilities</th>
+                <th scope="col">Hidden ability</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pokemon in pokemons %}
+                <tr>
+                    <th scope="row">{{ pokemon.pokedex_id }}</th>
+                    <td>{{ pokemon.name }}</td>
+                    <td>{{ pokemon.generation.name }}</td>
+                    <td>
+                        {{ pokemon.primary_type.name }}
+                        {% if pokemon.secondary_type is not None %}
+                            - {{ pokemon.secondary_type.name }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for ability in pokemon.abilities.all %}
+                            {{ ability.spanish_name }}
+                        {% endfor %}
+                    </td>
+                    <td>{{ pokemon.hidden_ability.spanish_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -10,6 +10,7 @@ def open_url(url):
     try:
         req = urllib.request.urlopen(cod_url)
         return req.read()
-    except:
+    except Exception as e:
+        print(e)
         print(f'----------Error---------- URL: {cod_url}')
         return None
