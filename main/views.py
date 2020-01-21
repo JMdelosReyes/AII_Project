@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from main.models import Pokemon, Generation, Type
 from main.populate.populate import populate_database
 
-from main.forms import ElementalTypeForm
+from main.forms import ElementalTypeForm, SearchForm
+from main.whoosh.pokemon_index import create_pokemon_index, search_pokemon
 
 
 def index(request):
@@ -12,6 +13,12 @@ def index(request):
 
 
 def about(request):
+    # create_pokemon_index()
+    emp = ()
+    emp = emp + (('-', '-'),)
+    for t in Type.objects.all():
+        emp = emp + ((t.name, t.name),)
+    print(emp)
     return render(request, 'index.html')
 
 
@@ -52,6 +59,21 @@ def pokemon_by_type(request):
     else:
         form = ElementalTypeForm()
 
-    return render(request, 'pokemon/types.html', {'title': 'Select a type!', 'form': form})
+    return render(request, 'pokemon/form.html', {'title': 'Select a type!', 'form': form, 'action_url': 'types'})
+
+
+def search_whoosh(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            primary_type = form.cleaned_data['primary_type']
+            secondary_type = form.cleaned_data['secondary_type']
+            pokemons = search_pokemon(primary_type, secondary_type)
+            return render(request, 'pokemon/pokemon_list.html',
+                          {'pokemons': pokemons, 'title': 'Search results'})
+    else:
+        form = SearchForm(initial={'primary_type': '3'})
+
+    return render(request, 'pokemon/form.html', {'title': 'Search', 'form': form, 'action_url': 'search'})
 
 # def get_pokemon(request, poke_id)

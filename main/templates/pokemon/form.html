@@ -9,7 +9,7 @@
     </div>
 
     <div class="container">
-        <form action="{% url 'types' %}" method="post">
+        <form action="{% url action_url %}" method="post">
             <div class="form-row align-items-center">
                 <div class="col-auto my-1">
                     {% csrf_token %}

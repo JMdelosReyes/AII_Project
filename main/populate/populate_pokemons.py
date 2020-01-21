@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 from main.models import Pokemon, Type, Ability, Generation
 from main.populate.populate_utils import open_url, BASE_URL, WIKI_URL
+from main.whoosh.pokemon_index import create_pokemon_index
 
 POKE_URL = f'{WIKI_URL}/Lista_de_Pokémon'
 
@@ -122,5 +123,4 @@ def extract_all_pokemon_data():
 
 def populate_pokemon():
     extract_all_pokemon_data()
-    # Move.objects.bulk_create(extract_moves_data())
     print(f'Pokemon inserted: {Pokemon.objects.count()} - Expected: 890')
