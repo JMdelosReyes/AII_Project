@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ title }}</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Region</th>
+                <th scope="col">New Pokèmon</th>
+                <th scope="col">Pokèmon of generation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for generation in generations %}
+                <tr>
+                    <th scope="row">{{ generation.gen_id }}</th>
+                    <td>{{ generation.name }}</td>
+                    <td>{{ generation.region }}</td>
+                    <td>{{ generation.added_pokemons }}</td>
+                    <td><a href="{% url 'pokemon_gen' generation.gen_id %}">Pokèmon de la {{ generation.name }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

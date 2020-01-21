@@ -13,8 +13,14 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'pokemon' %}">All Pokèmon</a>
                     <a class="dropdown-item" href="{% url 'pokemon' %}">Pokèmon by Generation</a>
-                    <a class="dropdown-item" href="{% url 'pokemon' %}">Pokèmon by Type</a>
+                    <a class="dropdown-item" href="{% url 'types' %}">Pokèmon by Type</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'generations' %}">Generations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'pokemon' %}">Search</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
