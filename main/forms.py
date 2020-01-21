@@ -1,5 +1,5 @@
 from django import forms
-from main.models import Type
+from main.models import Type, Generation
 
 
 class ElementalTypeForm(forms.Form):
@@ -7,7 +7,6 @@ class ElementalTypeForm(forms.Form):
         widget = forms.Select(
             attrs = {'class': 'custom-select mr-sm-2', 'name': 'subject'}
         ))
-
 
 
 def get_types_choices():
@@ -18,10 +17,14 @@ def get_types_choices():
     return tup
 
 
+def get_generations():
+    tup = ()
+    tup = tup + (('-', '-'),)
+    for g in Generation.objects.all():
+        tup = tup + ((g.gen_id, g.gen_id),)
+    return tup
+
 class SearchForm(forms.Form):
-#     name = forms.CharField(label='Name', max_length=30, widget = forms.TextInput(
-#             attrs = {'class': 'form-control'}
-#         ))
     primary_type = forms.ChoiceField(choices=get_types_choices,
         widget = forms.Select(
             attrs = {'class': 'custom-select mr-sm-2'}
@@ -30,5 +33,12 @@ class SearchForm(forms.Form):
         widget = forms.Select(
             attrs = {'class': 'custom-select mr-sm-2'}
         ))
+    generation = forms.ChoiceField(choices=get_generations,
+        widget = forms.Select(
+            attrs = {'class': 'custom-select mr-sm-2'}
+        ))
+    min_weight = forms.IntegerField(widget = forms.TextInput(
+            attrs = {'class': 'form-control mr-sm-2'}
+        ), initial=0)
 
 

@@ -11,14 +11,18 @@ DIR_INDEX = "index"
 
 def get_schema():
     return Schema(pokedex_id=ID(stored=True), name=TEXT(stored=True), generation=NUMERIC(stored=True),
-                  primary_type=TEXT(stored=True), secondary_type=TEXT(stored=True))
+                  primary_type=TEXT(stored=True), secondary_type=TEXT(stored=True), weight=NUMERIC(stored=True),
+                  height=NUMERIC(stored=True))
 
 
 def add_pokemon_doc(writer, pokemon):
-    writer.add_document(pokedex_id=str(pokemon.pokedex_id), name=pokemon.name,
+    writer.add_document(pokedex_id=str(pokemon.pokedex_id),
+                        name=pokemon.name,
                         generation=pokemon.generation.gen_id,
                         primary_type=pokemon.primary_type.name,
-                        secondary_type='' if pokemon.secondary_type is None else pokemon.secondary_type.name)
+                        secondary_type='' if pokemon.secondary_type is None else pokemon.secondary_type.name,
+                        weight=pokemon.weight,
+                        height=pokemon.height)
 
 
 def create_pokemon_index():
@@ -33,18 +37,28 @@ def create_pokemon_index():
     writer.commit()
 
 
-def search_pokemon(primary_type, secondary_type):
+def search_pokemon(primary_type, secondary_type, generation, min_weight):
     ix = open_dir(os.path.join('main', DIR_INDEX))
     pokemons = []
     with ix.searcher() as searcher:
-        primary_type = '' if primary_type == '-' else primary_type
+        if primary_type == '-' and secondary_type == '-' and generation == '-' and min_weight == 0:
+            results = ix.searcher().documents()
+        else:
+            primary_type = '' if primary_type == '-' else primary_type
 
-        query = primary_type
-        if secondary_type != '-':
-            query = query + ' secondary_type:' + secondary_type
+            query = primary_type
+            if secondary_type != '-':
+                query = query + ' secondary_type:' + secondary_type
 
-        query = QueryParser("primary_type", ix.schema).parse(query)
-        results = searcher.search(query, limit=None)
+            if generation != '-':
+                query = query + ' generation:' + generation
+
+            if min_weight != 0:
+                query = query + ' weight:' + f'[{min_weight} TO]'
+
+            query = QueryParser("primary_type", ix.schema).parse(query)
+            results = searcher.search(query, limit=None)
+
         for r in results:
             pokemons.append(Pokemon.objects.get(pokedex_id=r['pokedex_id']))
     return pokemons

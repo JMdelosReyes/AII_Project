@@ -124,3 +124,4 @@ def extract_all_pokemon_data():
 def populate_pokemon():
     extract_all_pokemon_data()
     print(f'Pokemon inserted: {Pokemon.objects.count()} - Expected: 890')
+    create_pokemon_index()

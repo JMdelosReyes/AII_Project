@@ -13,12 +13,6 @@ def index(request):
 
 
 def about(request):
-    # create_pokemon_index()
-    emp = ()
-    emp = emp + (('-', '-'),)
-    for t in Type.objects.all():
-        emp = emp + ((t.name, t.name),)
-    print(emp)
     return render(request, 'index.html')
 
 
@@ -68,7 +62,9 @@ def search_whoosh(request):
         if form.is_valid():
             primary_type = form.cleaned_data['primary_type']
             secondary_type = form.cleaned_data['secondary_type']
-            pokemons = search_pokemon(primary_type, secondary_type)
+            generation = form.cleaned_data['generation']
+            min_weight = form.cleaned_data['min_weight']
+            pokemons = search_pokemon(primary_type, secondary_type, generation, min_weight)
             return render(request, 'pokemon/pokemon_list.html',
                           {'pokemons': pokemons, 'title': 'Search results'})
     else:
