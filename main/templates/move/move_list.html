@@ -12,37 +12,37 @@
         <table class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th scope="col">Category</th>
-                <th scope="col">Power</th>
-                <th scope="col">Accuracy</th>
-                <th scope="col">Power Points</th>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Type</th>
+                <th scope="col" class="text-center">Category</th>
+                <th scope="col" class="text-center">Power</th>
+                <th scope="col" class="text-center">Accuracy</th>
+                <th scope="col" class="text-center">Power Points</th>
             </tr>
             </thead>
             <tbody>
             {% for move in moves %}
                 <tr>
-                    <th scope="row">{{ move.move_id }}</th>
-                    <td>{{ move.spanish_name }}</td>
-                    <td>{{ move.type.name }}</td>
-                    <td>{{ move.category }}</td>
-                    <td>
+                    <th scope="row" class="text-center">{{ move.move_id }}</th>
+                    <td class="text-center">{{ move.spanish_name }}</td>
+                    <td class="text-center">{{ move.type.name }}</td>
+                    <td class="text-center">{{ move.category }}</td>
+                    <td class="text-center">
                         {% if move.power is not None %}
                             {{ move.power }}
                         {% else %}
                             -
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="text-center">
                         {% if move.accuracy is not None %}
                             {{ move.accuracy }}
                         {% else %}
                             -
                         {% endif %}
                     </td>
-                    <td>{{ move.min_power_points }}({{ move.max_power_points }})</td>
+                    <td class="text-center">{{ move.min_power_points }}({{ move.max_power_points }})</td>
                 </tr>
             {% endfor %}
             </tbody>

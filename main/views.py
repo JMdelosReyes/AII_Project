@@ -23,7 +23,8 @@ def about(request):
 def populate(request):
     populate_database()
     create_pokemon_index()
-    return render(request, 'notification.html', {'message': 'Populate finished'})
+    return render(request, 'notification.html',
+                  {'message1': 'Populate finished', 'message2': 'Now you can use the page!'})
 
 
 def all_pokemon(request, gen_id=0, type_name=''):
@@ -116,7 +117,8 @@ def recommend(request):
     populate_trainers()
     create_ratings()
     load_dict()
-    return render(request, 'notification.html', {'message': 'RS finished'})
+    return render(request, 'notification.html',
+                  {'message1': 'RS loaded', 'message2': 'Now you can use the recommendation system!'})
 
 
 def similar_pokemon(request):

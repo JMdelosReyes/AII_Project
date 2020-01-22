@@ -12,21 +12,21 @@
         <table class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Region</th>
-                <th scope="col">New Pokèmon</th>
-                <th scope="col">Pokèmon of generation</th>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Region</th>
+                <th scope="col" class="text-center">New Pokèmon</th>
+                <th scope="col" class="text-center">Pokèmon of generation</th>
             </tr>
             </thead>
             <tbody>
             {% for generation in generations %}
                 <tr>
-                    <th scope="row">{{ generation.gen_id }}</th>
-                    <td>{{ generation.name }}</td>
-                    <td>{{ generation.region }}</td>
-                    <td>{{ generation.added_pokemons }}</td>
-                    <td><a href="{% url 'pokemon_gen' generation.gen_id %}">Pokèmon de la {{ generation.name }}</a></td>
+                    <th scope="row" class="text-center">{{ generation.gen_id }}</th>
+                    <td class="text-center">{{ generation.name }}</td>
+                    <td class="text-center">{{ generation.region }}</td>
+                    <td class="text-center">{{ generation.added_pokemons }}</td>
+                    <td class="text-center"><a href="{% url 'pokemon_gen' generation.gen_id %}">Pokèmon de la {{ generation.name }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

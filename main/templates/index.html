@@ -2,12 +2,20 @@
 
 {% block content %}
 
-    {% if user.is_authenticated %}
-        Logged as: {{ user }}
-    {% endif %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Welcome to Pokèmon DB</h1>
+            <hr class="my-4">
+            <p>
+                {% if user.is_authenticated %}
+                    Logged as: {{ user }}
+                {% endif %}
 
-    {% if not user.is_authenticated %}
-        Not logged in
-    {% endif %}
+                {% if not user.is_authenticated %}
+                    Not logged in
+                {% endif %}
+            </p>
+        </div>
+    </div>
 
 {% endblock %}
