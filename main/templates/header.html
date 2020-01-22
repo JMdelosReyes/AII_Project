@@ -13,6 +13,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'pokemon' %}">All Pokèmon</a>
                     <a class="dropdown-item" href="{% url 'types' %}">Pokèmon by Type</a>
+                    <a class="dropdown-item" href="{% url 'highest' %}">Top 10 Highest Pokèmon</a>
                     <a class="dropdown-item" href="{% url 'search' %}">Search</a>
                 </div>
             </li>
@@ -27,6 +28,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{% url 'moves' %}">All Moves</a>
                     <a class="dropdown-item" href="{% url 'move_types' %}">Moves by Type</a>
+                    <a class="dropdown-item" href="{% url 'strongest' %}">Top 10 Strongest Moves</a>
                 </div>
             </li>
             {% if user.is_authenticated %}

@@ -144,3 +144,13 @@ def similar_pokemon(request):
 
     return render(request, 'recommend/form.html',
                   {'title': 'Select a Pokèmon ID!', 'form': form, 'action_url': 'recommend_pokemon'})
+
+
+def highest_pokemon(request):
+    pokemons = Pokemon.objects.order_by('-height')[:10]
+    return render(request, 'pokemon/pokemon_list.html', {'pokemons': pokemons, 'title': 'Top 10 Highest Pokèmon'})
+
+
+def strongest_moves(request):
+    moves = Move.objects.order_by('-power')[:10]
+    return render(request, 'move/move_list.html', {'moves': moves, 'title': 'Top 10 Strongest Moves'})
