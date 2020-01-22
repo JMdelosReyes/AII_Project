@@ -34,9 +34,22 @@
                     <a class="nav-link" href="{% url 'populate' %}">Populate</a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Recommend
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'recommend' %}">Load RS</a>
+                        <a class="dropdown-item" href="{% url 'recommend_pokemon' %}">Recommend by Pokèmon</a>
+                        <a class="dropdown-item" href="{% url 'search' %}">Search</a>
+                    </div>
+                </li>
+            {% endif %}
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'about' %}">About</a>#}
+            {#            </li>#}
             {% if not user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Login</a>

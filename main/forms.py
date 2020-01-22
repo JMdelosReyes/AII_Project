@@ -42,3 +42,9 @@ class SearchForm(forms.Form):
         ), initial=0)
 
 
+class PokemonIdForm(forms.Form):
+    pokemon_id = forms.IntegerField(widget = forms.TextInput(
+            attrs = {'class': 'form-control mr-sm-2'}
+        ), initial=1)
+
+

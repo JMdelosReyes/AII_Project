@@ -1,10 +1,14 @@
-from django.db.models import Q
-from django.shortcuts import render, redirect
+import shelve
+
+from django.db.models import Q, Avg
+from django.shortcuts import render, redirect, get_object_or_404
 
 from main.models import Pokemon, Generation, Type, Move
 from main.populate.populate import populate_database
 
-from main.forms import ElementalTypeForm, SearchForm
+from main.forms import ElementalTypeForm, SearchForm, PokemonIdForm
+from main.recommend.recommend import populate_trainers, create_ratings, load_dict
+from main.recommend.recommendations import topMatches
 from main.whoosh.pokemon_index import create_pokemon_index, search_pokemon
 
 
@@ -79,7 +83,9 @@ def pokemon_view(request, poke_id=0):
         return redirect('index')
 
     pokemon = Pokemon.objects.get(pokedex_id=poke_id)
-    return render(request, 'pokemon/pokemon_view.html', {'pokemon': pokemon})
+    average_rating = pokemon.rating_set.aggregate(Avg('rating'))['rating__avg']
+    print(average_rating)
+    return render(request, 'pokemon/pokemon_view.html', {'pokemon': pokemon, 'average_rating': average_rating})
 
 
 def all_moves(request, type_name=''):
@@ -104,3 +110,35 @@ def moves_by_type(request):
         form = ElementalTypeForm()
 
     return render(request, 'move/form.html', {'title': 'Select a type!', 'form': form, 'action_url': 'move_types'})
+
+
+def recommend(request):
+    populate_trainers()
+    create_ratings()
+    load_dict()
+    return render(request, 'notification.html', {'message': 'RS finished'})
+
+
+def similar_pokemon(request):
+    if request.method == 'POST':
+        form = PokemonIdForm(request.POST)
+        if form.is_valid():
+            pokemon_id = form.cleaned_data['pokemon_id']
+            pokemon = get_object_or_404(Pokemon, pk=pokemon_id)
+            shelf = shelve.open("dataRS.dat")
+            items_prefs = shelf['ItemsPrefs']
+            shelf.close()
+            recommended = topMatches(items_prefs, int(pokemon_id), n=5)
+            pokemons = []
+            similar = []
+            for re in recommended:
+                pokemons.append(Pokemon.objects.get(pk=re[1]))
+                similar.append(re[0])
+            items = zip(pokemons, similar)
+            return render(request, 'pokemon/pokemon_list.html',
+                          {'pokemons': pokemons, 'title': f'Similar Pokèmon to {pokemon.name}'})
+    else:
+        form = PokemonIdForm()
+
+    return render(request, 'recommend/form.html',
+                  {'title': 'Select a Pokèmon ID!', 'form': form, 'action_url': 'recommend_pokemon'})

@@ -1,4 +1,5 @@
-from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -68,3 +69,19 @@ class Move(models.Model):
 
     def __str__(self):
         return f'ID: {self.move_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
+
+
+class Trainer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'ID: {self.user.username}'
+
+
+class Rating(models.Model):
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return f'Trainer: {self.trainer.user.username} - Pokèmon: {self.pokemon.name} - Rating: {self.rating}'

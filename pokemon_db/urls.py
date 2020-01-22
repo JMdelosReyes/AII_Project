@@ -18,6 +18,8 @@ urlpatterns = [
     path('move/type/<str:type_name>', views.all_moves, name='moves_type'),
     path('move/type/', views.moves_by_type, name='move_types'),
     path('populate/', login_required(views.populate), name='populate'),
+    path('recommend/', login_required(views.recommend), name='recommend'),
+    path('recommend/pokemon/', login_required(views.similar_pokemon), name='recommend_pokemon'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('', views.index, name=''),

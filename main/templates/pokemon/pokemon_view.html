@@ -16,12 +16,9 @@
                     <center class="m-t-30"><img src="{{ pokemon.image }}" class="img-circle" width="150"
                                                 alt="{{ pokemon.name }}">
                         <h4 class="card-title m-t-10">{{ pokemon.name }}</h4>
-                        <h6 class="card-subtitle">Tipos</h6>
+                        <h6 class="card-subtitle">Rating</h6>
                         <div class="row text-center justify-content-md-center">
-                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-user"></i>
-                                <font class="font-medium">254</font></a></div>
-                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-image"></i>
-                                <font class="font-medium">54</font></a></div>
+                            {{ average_rating }}
                         </div>
                     </center>
                 </div>
