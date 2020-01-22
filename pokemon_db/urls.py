@@ -13,6 +13,7 @@ urlpatterns = [
     path('generation/', views.generations, name='generations'),
     path('types/', views.pokemon_by_type, name='types'),
     path('search/', views.search_whoosh, name='search'),
+    path('pokemon/<int:poke_id>', views.pokemon_view, name='pokemon_view'),
     path('populate/', login_required(views.populate), name='populate'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),

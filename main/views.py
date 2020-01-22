@@ -73,4 +73,10 @@ def search_whoosh(request):
 
     return render(request, 'pokemon/form.html', {'title': 'Search', 'form': form, 'action_url': 'search'})
 
-# def get_pokemon(request, poke_id)
+
+def pokemon_view(request, poke_id=0):
+    if poke_id == 0 or poke_id > 890:
+        return redirect('index')
+
+    pokemon = Pokemon.objects.get(pokedex_id=poke_id)
+    return render(request, 'pokemon/pokemon_view.html', {'pokemon': pokemon})

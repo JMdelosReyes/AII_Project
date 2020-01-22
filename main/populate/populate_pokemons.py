@@ -24,7 +24,7 @@ def correct_ability_name(name):
 def add_abilities(pokemon, ability_links):
     abilities = []
     for a in ability_links:
-        if a.text.strip() != '1' and a.text.strip() != '2':
+        if a.text.strip() != '1' and a.text.strip() != '2' and a.text.strip() != '3':
             ability_name = correct_ability_name(a.text.strip().rstrip('1'))
             try:
                 ability = Ability.objects.get(spanish_name=ability_name)

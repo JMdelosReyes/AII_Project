@@ -24,7 +24,7 @@
             {% for pokemon in pokemons %}
                 <tr>
                     <th scope="row">{{ pokemon.pokedex_id }}</th>
-                    <td>{{ pokemon.name }}</td>
+                    <td><a href="{% url 'pokemon_view' pokemon.pokedex_id %}">{{ pokemon.name }}</a></td>
                     <td>{{ pokemon.generation.name }}</td>
                     <td>
                         {{ pokemon.primary_type.name }}
@@ -33,9 +33,11 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% for ability in pokemon.abilities.all %}
-                            {{ ability.spanish_name }}
-                        {% endfor %}
+                        {% if pokemon.abilities.all|length == 1 %}
+                            {{ pokemon.abilities.first.spanish_name }}
+                        {% else %}
+                            {{ pokemon.abilities.first.spanish_name }} - {{ pokemon.abilities.last.spanish_name }}
+                        {% endif %}
                     </td>
                     <td>{{ pokemon.hidden_ability.spanish_name }}</td>
                 </tr>

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ pokemon.name }}</h1>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <center class="m-t-30"><img src="{{ pokemon.image }}" class="img-circle" width="150"
+                                                alt="{{ pokemon.name }}">
+                        <h4 class="card-title m-t-10">{{ pokemon.name }}</h4>
+                        <h6 class="card-subtitle">Tipos</h6>
+                        <div class="row text-center justify-content-md-center">
+                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-user"></i>
+                                <font class="font-medium">254</font></a></div>
+                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="fa fa-image"></i>
+                                <font class="font-medium">54</font></a></div>
+                        </div>
+                    </center>
+                </div>
+                <div>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <small class="text-muted">Generation</small>
+                    <h6>{{ pokemon.generation.name }}</h6>
+
+                    <small class="text-muted p-t-30 db">Elemental Type</small>
+                    <h6>
+                        {{ pokemon.primary_type.name }}
+                        {% if pokemon.secondary_type is not None %}
+                            - {{ pokemon.secondary_type.name }}
+                        {% endif %}
+                    </h6>
+
+                    <small class="text-muted p-t-30 db">Ability</small>
+                    <h6>
+                        {% if pokemon.abilities.all|length == 1 %}
+                            {{ pokemon.abilities.first.spanish_name }}
+                        {% else %}
+                            {{ pokemon.abilities.first.spanish_name }} - {{ pokemon.abilities.last.spanish_name }}
+                        {% endif %}
+                    </h6>
+
+                    <small class="text-muted p-t-30 db">Hidden Ability</small>
+                    <h6>
+                        {% if pokemon.hidden_ability is not None %}
+                            {{ pokemon.hidden_ability.spanish_name }}
+                        {% endif %}
+                    </h6>
+
+                    <small class="text-muted p-t-30 db">Weight</small>
+                    <h6>
+                        {{ pokemon.weight }} m
+                    </h6>
+
+                    <small class="text-muted p-t-30 db">Height</small>
+                    <h6>
+                        {{ pokemon.height }} kg
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

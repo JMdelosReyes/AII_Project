@@ -4,7 +4,6 @@ from django.db import models
 
 class Pokemon(models.Model):
     pokedex_id = models.IntegerField(primary_key=True)
-    # pokedex_desc = models.TextField()
     name = models.CharField(max_length=50, unique=True)
     image = models.CharField(max_length=150)
     generation = models.ForeignKey('Generation', null=True, on_delete=models.SET_NULL)
@@ -12,8 +11,6 @@ class Pokemon(models.Model):
     secondary_type = models.ForeignKey('Type', null=True, on_delete=models.SET_NULL, related_name="secondary_type")
     abilities = models.ManyToManyField('Ability', related_name="abilities")
     hidden_ability = models.ForeignKey('Ability', null=True, on_delete=models.SET_NULL, related_name="hidden_ability")
-    # evolution
-    # moves
     weight = models.FloatField(validators=[MinValueValidator(0)])  # kg
     height = models.FloatField(validators=[MinValueValidator(0)])  # m
 
@@ -71,5 +68,3 @@ class Move(models.Model):
 
     def __str__(self):
         return f'ID: {self.move_id} - Spanish name: {self.spanish_name} - English name: {self.english_name}'
-
-# class MoveLearned(models.Model):
