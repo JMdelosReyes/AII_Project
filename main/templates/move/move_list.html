@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ title }}</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Category</th>
+                <th scope="col">Power</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">Power Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for move in moves %}
+                <tr>
+                    <th scope="row">{{ move.move_id }}</th>
+                    <td>{{ move.spanish_name }}</td>
+                    <td>{{ move.type.name }}</td>
+                    <td>{{ move.category }}</td>
+                    <td>
+                        {% if move.power is not None %}
+                            {{ move.power }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if move.accuracy is not None %}
+                            {{ move.accuracy }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ move.min_power_points }}({{ move.max_power_points }})</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

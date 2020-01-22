@@ -33,11 +33,13 @@ def extract_move(move_tr, move_id):
             else:
                 category = 'Physical'
 
-            power = table.find('div', class_='combate').find_all('tr')[2].find('td').text.strip()
+            power = table.find('div', class_='combate').find_all('tr')[2].find('td').text.strip().rstrip('1').rstrip(
+                '2')
             if power.startswith('-'):
                 power = None
 
-            accuracy = table.find('div', class_='combate').find_all('tr')[3].find('td').text.strip()
+            accuracy = table.find('div', class_='combate').find_all('tr')[3].find('td').text.strip().rstrip('1').rstrip(
+                '2')
             if accuracy == '-':
                 accuracy = None
 

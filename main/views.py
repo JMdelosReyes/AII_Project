@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
-from main.models import Pokemon, Generation, Type
+from main.models import Pokemon, Generation, Type, Move
 from main.populate.populate import populate_database
 
 from main.forms import ElementalTypeForm, SearchForm
@@ -80,3 +80,27 @@ def pokemon_view(request, poke_id=0):
 
     pokemon = Pokemon.objects.get(pokedex_id=poke_id)
     return render(request, 'pokemon/pokemon_view.html', {'pokemon': pokemon})
+
+
+def all_moves(request, type_name=''):
+    if type_name != '':
+        type_name = type_name.capitalize()
+        moves = Move.objects.filter(type__name=type_name)
+        title = f'Movimientos de tipo {type_name}'
+        return render(request, 'move/move_list.html', {'moves': moves, 'title': title})
+
+    return render(request, 'move/move_list.html', {'moves': Move.objects.all(), 'title': 'All Moves'})
+
+
+def moves_by_type(request):
+    if request.method == 'POST':
+        form = ElementalTypeForm(request.POST)
+        if form.is_valid():
+            elemental_type = form.cleaned_data['type']
+            type_db = Type.objects.get(name=elemental_type)
+            if type_db:
+                return redirect('moves_type', type_name=elemental_type)
+    else:
+        form = ElementalTypeForm()
+
+    return render(request, 'move/form.html', {'title': 'Select a type!', 'form': form, 'action_url': 'move_types'})
