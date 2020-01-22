@@ -18,6 +18,7 @@ def about(request):
 
 def populate(request):
     populate_database()
+    create_pokemon_index()
     return render(request, 'notification.html', {'message': 'Populate finished'})
 
 

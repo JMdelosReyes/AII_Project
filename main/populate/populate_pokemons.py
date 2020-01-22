@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 
 from main.models import Pokemon, Type, Ability, Generation
 from main.populate.populate_utils import open_url, BASE_URL, WIKI_URL
-from main.whoosh.pokemon_index import create_pokemon_index
 
 POKE_URL = f'{WIKI_URL}/Lista_de_Pokémon'
 
@@ -25,13 +24,14 @@ def correct_ability_name(name):
 def add_abilities(pokemon, ability_links):
     abilities = []
     for a in ability_links:
-        ability_name = correct_ability_name(a.text.strip().rstrip('1'))
-        try:
-            ability = Ability.objects.get(spanish_name=ability_name)
-            abilities.append(ability)
-        except Exception as e:
-            print(e)
-            print(f'Error finding ability {ability_name} for {pokemon.name}')
+        if a.text.strip() != '1' and a.text.strip() != '2':
+            ability_name = correct_ability_name(a.text.strip().rstrip('1'))
+            try:
+                ability = Ability.objects.get(spanish_name=ability_name)
+                abilities.append(ability)
+            except Exception as e:
+                print(e)
+                print(f'Error finding ability {ability_name} for {pokemon.name}')
 
         for ab in abilities:
             pokemon.abilities.add(ab)
@@ -79,7 +79,7 @@ def extract_pokemon(poke_id, name, link, type_1, type_2):
 
                 try:
                     ability_links = data_table.find('tr', title='Habilidades que puede conocer').find('td').find_all(
-                        'a')[:2]
+                        'a')
                     add_abilities(pokemon, ability_links)
                 except Exception as e:
                     print(e)
@@ -104,7 +104,6 @@ def extract_all_pokemon_data():
         for t in pokemon_tables:
             pokemon_soup = pokemon_soup + t.find_all('tr')[1:]
 
-        pokes = []
         for poke_tr in pokemon_soup:
             poke_cells = poke_tr.find_all('td')
             poke_id = poke_cells[0].text.strip()
@@ -118,10 +117,7 @@ def extract_all_pokemon_data():
             else:
                 print('Pokemon not added yet')
 
-        # return moves
-
 
 def populate_pokemon():
     extract_all_pokemon_data()
     print(f'Pokemon inserted: {Pokemon.objects.count()} - Expected: 890')
-    create_pokemon_index()

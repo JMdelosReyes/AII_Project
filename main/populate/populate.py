@@ -8,21 +8,21 @@ from main.populate.populate_types import populate_types
 
 def delete_data():
     Pokemon.objects.all().delete()
-    Move.objects.all().delete()
+    # Move.objects.all().delete()
     Generation.objects.all().delete()
     Type.objects.all().delete()
     Ability.objects.all().delete()
 
 
 def populate_database():
-    print("Started database population")
+    print("--------------- Started database population ---------------")
     delete_data()
     populate_generations()
     populate_types()
     populate_abilities()
     # populate_moves()
     populate_pokemon()
-    print("Finished database population")
+    print("--------------- Finished database population ---------------")
 
 
 if __name__ == '__main__':

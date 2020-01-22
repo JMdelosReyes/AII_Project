@@ -13,18 +13,16 @@ def extract_types_data():
         types_soup = soup.find('table').find_all('tr')[1:]
 
         types = []
-
         cont = 1
         for t in types_soup:
             type_id = cont
             name = t.find('td').text.strip()
             cont = cont + 1
 
-            # print(f'ID: {type_id} - Name: {name}')
-
             try:
                 types.append(Type(int(type_id), name))
-            except:
+            except Exception as e:
+                print(e)
                 print(
                     f'----------Error---------- : ID: {type_id} - Name: {name}')
 

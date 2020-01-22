@@ -26,12 +26,10 @@ def extract_abilities_data():
             description = td[2].text.strip()
             cont = cont + 1
 
-            # print(f'ID: {ability_id} - Spanish name: {spanish_name} - English name: {english_name}'
-            #       f' - Description: {description}')
-
             try:
                 abilities.append(Ability(int(ability_id), spanish_name, english_name, description))
-            except:
+            except Exception as e:
+                print(e)
                 print(
                     f'----------Error---------- : ID: {ability_id} - Name: {spanish_name}')
 

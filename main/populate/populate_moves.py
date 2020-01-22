@@ -76,40 +76,18 @@ def extract_move(move_tr, move_id):
             else:
                 kings_rock_affected = False
 
-            # print(spanish_name)
-            # print(english_name)
-            # print(type_name)
-            # print(type_db)
-            # print(cat)
-            # print(category)
-            # print(power)
-            # print(accuracy)
-            # print(min_power_points)
-            # print(max_power_points)
-            # print(secondary_effect)
-            # print(priority)
-            # print(contact_bool)
-            # print(magic_coat_affected)
-            # print(protection_affected)
-            # print(snatch_affected)
-            # print(kings_rock_affected)
-
             try:
-                # return Move(move_id, spanish_name, english_name, type_db.type_id, category, power, accuracy,
-                #             secondary_effect,
-                #             min_power_points, max_power_points, priority, contact_bool, magic_coat_affected,
-                #             protection_affected, snatch_affected, kings_rock_affected)
                 m = Move(move_id, spanish_name, english_name, type_db.type_id, category, power, accuracy,
                          secondary_effect,
                          min_power_points, max_power_points, priority, contact_bool, magic_coat_affected,
                          protection_affected, snatch_affected, kings_rock_affected)
-
                 m.save()
             except Exception as e:
                 print(e)
                 print(
                     f'----------Error---------- : ID: {move_id} - Name: {spanish_name}')
-        except:
+        except Exception as e:
+            print(e)
             print(f'ERROR -------------- {BASE_URL}{link}')
 
 
@@ -123,18 +101,12 @@ def extract_moves_data():
         for t in moves_tables:
             moves_soup = moves_soup + t.find_all('tr')[1:]
 
-        moves = []
         cont = 1
         for move_tr in moves_soup:
-            # move = extract_move(move_tr, cont)
-            # moves.append(move)
             extract_move(move_tr, cont)
             cont = cont + 1
-
-        # return moves
 
 
 def populate_moves():
     extract_moves_data()
-    # Move.objects.bulk_create(extract_moves_data())
     print(f'Moves inserted: {Move.objects.count()} - Expected: 723')
